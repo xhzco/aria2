@@ -70,12 +70,20 @@ RUN tar xf sqlite-autoconf-3360000.tar.gz && \
         --build=`dpkg-architecture -qDEB_BUILD_GNU_TYPE` && \
     make install
 
-RUN export BINARY_PATH/$HOST/bin
-RUN export INCLUDE_PATH/$HOST/include
-RUN export LIBRARY_PATH/$HOST/lib
+
 RUN tar xf zlib-1.2.11.tar.gz && \
     cd zlib-1.2.11 && \
-    make install -f win32/Makefile.gcc PREFIX=$HOST- SHARED_MODE=1
+    CC=$HOST-gcc \
+    AR=$HOST-ar \
+    LD=$HOST-ld \
+    RANLIB=$HOST-ranlib \
+    STRIP=$HOST-strip \
+    ./configure \
+        --prefix=/usr/local/$HOST \
+        --libdir=/usr/local/$HOST/lib \
+        --includedir=/usr/local/$HOST/include \
+        --static && \
+    make install
 
 RUN tar xf c-ares-1.17.2.tar.gz && \
     cd c-ares-1.17.2 && \
