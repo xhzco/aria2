@@ -75,7 +75,8 @@ test -z "$PREFIX" && PREFIX=/usr/local/$HOST
     --without-libgcrypt \
     --without-libnettle \
     --with-cppunit-prefix=$PREFIX \
-    --enable-libaria2 \
+    --enable-libaria=yes \
+    --enable-static=yes \
     CPPFLAGS="-I$PREFIX/include" \
     LDFLAGS="-L$PREFIX/lib" \
     PKG_CONFIG_PATH="$PREFIX/lib/pkgconfig"
